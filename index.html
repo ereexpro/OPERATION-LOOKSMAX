@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0b0c">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>OPERATION LOOKSMAX</title>
+<style>
+:root{--bg:#0b0b0c;--panel:#17171a;--line:#2a2a2f;--gold:#c9a24b;--gold2:#e8cd86;--txt:#e9e6dc;--mut:#8d8a80;--red:#b3402f;--grn:#5e8c4a}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body{padding:env(safe-area-inset-top) 0 calc(64px + env(safe-area-inset-bottom))}
+header{padding:14px 14px 8px;text-align:center;border-bottom:1px solid var(--gold)}
+header h1{margin:0;font-size:18px;letter-spacing:.28em;color:var(--gold);font-weight:800}
+header small{color:var(--mut);letter-spacing:.2em;font-size:10px}
+.dates{display:flex;gap:6px;padding:10px 12px}
+.dates button,.dates input{background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:6px;min-height:44px;font:inherit}
+.dates button{padding:0 14px;font-weight:700}#today{color:var(--gold);letter-spacing:.1em}
+.dates input{flex:1;min-width:0;text-align:center;color-scheme:dark}
+#score{margin:0 12px;padding:14px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:8px;text-align:center}
+.big{font-size:52px;font-weight:800;color:var(--gold2);line-height:1}.big span{font-size:18px;color:var(--mut)}
+.cls{letter-spacing:.25em;font-weight:700;margin:6px 0 10px;color:var(--gold)}
+.bar{height:8px;background:#26262b;border-radius:4px;overflow:hidden;flex:1}.bar i{display:block;height:100%;background:linear-gradient(90deg,#8a6d2b,var(--gold2));transition:width .3s}
+.cnt{display:grid;grid-template-columns:repeat(4,1fr);margin-top:12px;font-size:10px;letter-spacing:.1em;color:var(--mut)}.cnt b{display:block;font-size:20px;color:var(--txt)}
+.cnt{grid-template-rows:auto auto}
+.empty{padding:10px;color:var(--gold);letter-spacing:.1em;font-weight:700}.empty small{color:var(--mut);font-weight:400;letter-spacing:0}
+#view{padding:4px 12px}
+h3{margin:20px 0 8px;font-size:13px;letter-spacing:.2em;color:var(--gold);border-bottom:1px solid var(--line);padding-bottom:6px}h3 small{float:right;color:var(--mut)}
+h4{margin:14px 0 6px;font-size:12px;color:var(--mut);letter-spacing:.1em;text-transform:uppercase}
+.m{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:8px}
+.m p{margin:0 0 8px}.m em{font-style:normal;color:var(--gold);font-weight:700;margin-right:4px}
+.st{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.st button{min-height:40px;border:1px solid var(--line);background:#101012;color:var(--mut);border-radius:6px;font:700 12px inherit;font-family:inherit}
+.st button.on{color:#000;background:var(--mut)}.s-DONE{border-left:3px solid var(--grn)}.s-FAILED{border-left:3px solid var(--red)}
+.s-DONE .st .on{background:var(--grn);color:#fff}.s-FAILED .st .on{background:var(--red);color:#fff}.s-NA{opacity:.6}
+.tr,.fl{display:grid;grid-template-columns:1fr 100px;gap:4px 10px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:8px}
+.tr span small{display:block;color:var(--mut)}.tr b{grid-column:1/3;color:var(--gold2);font-size:13px}.fl{grid-template-columns:1fr}
+input[type=text],input[type=number],textarea{width:100%;background:#101012;color:var(--txt);border:1px solid var(--line);border-radius:6px;padding:10px;font:inherit;margin-bottom:6px}
+input.bad{border-color:var(--red)}textarea{min-height:90px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px;margin:10px 0;text-align:center}
+.rank{font-size:30px;font-weight:800;letter-spacing:.2em;color:var(--gold2);margin:4px 0 10px}.card .bar{margin:6px 0}
+.mut{color:var(--mut);font-size:13px}.hist{display:flex;gap:8px;align-items:center;margin:6px 0;font-size:12px}.hist span{width:110px;color:var(--mut)}.hist b{width:44px;text-align:right}
+.btn{display:block;width:100%;min-height:48px;margin:10px 0;background:var(--panel);color:var(--gold);border:1px solid var(--gold);border-radius:6px;font:700 13px inherit;font-family:inherit;letter-spacing:.15em}
+.btn.danger{color:#e07a68;border-color:var(--red)}
+nav{position:fixed;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);background:#0f0f11;border-top:1px solid var(--gold);padding-bottom:env(safe-area-inset-bottom)}
+nav button{min-height:56px;background:none;border:0;color:var(--mut);font:700 11px inherit;font-family:inherit;letter-spacing:.15em}nav button.on{color:var(--gold2);box-shadow:inset 0 2px var(--gold)}
+#toast{position:fixed;left:12px;right:12px;bottom:80px;background:var(--gold);color:#000;padding:12px;border-radius:6px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .2s;text-align:center}#toast.on{opacity:1}
+</style>
+</head>
+<body>
+<header><h1>OPERATION LOOKSMAX</h1><small>PERSONAL PERFORMANCE COMMAND CENTER</small></header>
+<div class="dates"><button id="prev" aria-label="Previous day">&#9664;</button><input type="date" id="date" aria-label="Select date"><button id="today">TODAY</button><button id="next" aria-label="Next day">&#9654;</button></div>
+<div id="score"></div>
+<main id="view"></main>
+<nav><button data-tab="ops">MISSIONS</button><button data-tab="track">TRACK</button><button data-tab="intel">INTEL</button><button data-tab="data">DATA</button></nav>
+<div id="toast"></div>
+<noscript><p style="padding:20px">JavaScript is required.</p></noscript>
+<script src="app.js"></script>
+</body>
+</html>
